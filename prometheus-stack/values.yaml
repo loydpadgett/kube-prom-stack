@@ -380,9 +380,9 @@ alertmanager:
     ##
     ## Prefix for the per replica ingress that will have `-$replicaNumber`
     ## appended to the end
-    #hostPrefix: "monitor"
+    hostPrefix: ""
     ## Domain that will be used for the per replica ingress
-    #hostDomain: "k3s.lan"
+    hostDomain: ""
 
     ## Paths to use for ingress rules
     ##
@@ -449,7 +449,7 @@ alertmanager:
 
     ## Service type
     ##
-    type: LoadBalancer
+    type: ClusterIP
 
   ## Configuration for creating a separate Service for each statefulset Alertmanager replica
   ##
@@ -479,7 +479,7 @@ alertmanager:
 
     ## Service type
     ##
-    type: LoadBalancer
+    type: ClusterIP
 
   ## If true, create a serviceMonitor for alertmanager
   ##
@@ -832,8 +832,7 @@ alertmanager:
 grafana:
   enabled: true
   namespaceOverride: ""
-  service:
-    type: LoadBalancer
+
   ## ForceDeployDatasources Create datasource configmap even if grafana deployment has been disabled
   ##
   forceDeployDatasources: false
@@ -851,35 +850,38 @@ grafana:
   ##
   defaultDashboardsTimezone: utc
 
-  adminPassword: l@m1nbeak
+  adminPassword: prom-operator
 
-
-    ##pspEnabled: false
+  rbac:
+    ## If true, Grafana PSPs will be created
+    ##
+    pspEnabled: false
 
   ingress:
     ## If true, Grafana Ingress will be created
     ##
-    ##enabled: true
+    enabled: false
 
     ## IngressClassName for Grafana Ingress.
     ## Should be provided if Ingress is enable.
     ##
-    ##ingressClassName: traefik
+    # ingressClassName: nginx
 
     ## Annotations for Grafana Ingress
     ##
-##   annotations: {}
-##     kubernetes.io/ingress.class: nginx
-##     kubernetes.io/tls-acme: "true"
+    annotations: {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
 
     ## Labels to be added to the Ingress
     ##
-    labels: 
+    labels: {}
+
     ## Hostnames.
     ## Must be provided if Ingress is enable.
     ##
-    ##  hosts:
-    ##  - grafana.k3s.lan
+    # hosts:
+    #   - grafana.domain.com
     hosts: []
 
     ## Path for grafana ingress
@@ -2100,7 +2102,7 @@ prometheusOperator:
   ## Service type
   ## NodePort, ClusterIP, LoadBalancer
   ##
-    type: LoadBalancer
+    type: ClusterIP
 
     ## List of IP addresses at which the Prometheus server service is available
     ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
@@ -2523,7 +2525,7 @@ prometheus:
 
     ## Service type
     ##
-    type: LoadBalancer
+    type: ClusterIP
 
     ## Additional port to define in the Service
     additionalPorts: []
