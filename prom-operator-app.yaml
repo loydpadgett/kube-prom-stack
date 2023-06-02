@@ -8,6 +8,6 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: /kube-prometheus-stack
+    path: kube-prometheus-stack/
     repoURL: https://github.com/loydpadgett/kube-prom-stack
     targetRevision: main
