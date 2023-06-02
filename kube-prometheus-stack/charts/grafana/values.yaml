@@ -39,7 +39,7 @@ serviceAccount:
 #    eks.amazonaws.com/role-arn: arn:aws:iam::123456789000:role/iam-role-name-here
   autoMount: true
 
-replicas: 1
+replicas: 2
 
 ## Create a headless service for the deployment
 headlessService: false
@@ -183,7 +183,7 @@ gossipPortName: gossip
 ##
 service:
   enabled: true
-  type: ClusterIP
+  type: LoadBalancer
   port: 80
   targetPort: 3000
     # targetPort: 4181 To be used with a proxy extraContainer
@@ -198,7 +198,7 @@ serviceMonitor:
   ## If true, a ServiceMonitor CRD is created for a prometheus operator
   ## https://github.com/coreos/prometheus-operator
   ##
-  enabled: false
+  enabled: true
   path: /metrics
   #  namespace: monitoring  (defaults to use the namespace this chart is deployed to)
   labels: {}
