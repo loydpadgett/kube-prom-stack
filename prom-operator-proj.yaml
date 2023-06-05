@@ -1,0 +1,21 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: prom-prod
+spec:
+  roles:
+    - name: read-sync
+      description: read and sync priviliges.
+      policies:
+        - p, proj:prom-prod:read-sync, applications, get, prom-prod/*, allow
+        - p, proj:prom-prod:read-sync, applications, sync, prom-prod/*, allow
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  description: Project to configure the prometheus kube-stack operator.
+  destinations:
+    - namespace: monitor
+      server: https://kubernetes.default.svc
+  sourceRepos:
+    - https://github.com/loydpadgett/kube-prom-stack
