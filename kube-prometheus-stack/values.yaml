@@ -342,7 +342,7 @@ alertmanager:
 
     ## Paths to use for ingress rules - one path should match the alertmanagerSpec.routePrefix
     ##
-    paths: []
+    #paths: []
     # - /
 
     ## For Kubernetes >= 1.18 you should specify the pathType (determines how Ingress paths should be matched)
@@ -380,9 +380,9 @@ alertmanager:
     ##
     ## Prefix for the per replica ingress that will have `-$replicaNumber`
     ## appended to the end
-    hostPrefix: ""
+    #hostPrefix: ""
     ## Domain that will be used for the per replica ingress
-    hostDomain: ""
+    #hostDomain: ""
 
     ## Paths to use for ingress rules
     ##
@@ -449,7 +449,7 @@ alertmanager:
 
     ## Service type
     ##
-    type: ClusterIP
+    type: LoadBalancer
 
   ## Configuration for creating a separate Service for each statefulset Alertmanager replica
   ##
@@ -850,7 +850,7 @@ grafana:
   ##
   defaultDashboardsTimezone: utc
 
-  adminPassword: prom-operator
+  adminPassword: prom-perator
 
   rbac:
     ## If true, Grafana PSPs will be created
@@ -2102,7 +2102,7 @@ prometheusOperator:
   ## Service type
   ## NodePort, ClusterIP, LoadBalancer
   ##
-    type: ClusterIP
+    type: LoadBalancer
 
     ## List of IP addresses at which the Prometheus server service is available
     ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
@@ -2525,7 +2525,7 @@ prometheus:
 
     ## Service type
     ##
-    type: ClusterIP
+    type: LoadBalancer
 
     ## Additional port to define in the Service
     additionalPorts: []
