@@ -4,11 +4,11 @@ metadata:
   name: prometheus-grafana
 spec: 
   destination:
-    namespace: monitor
+    namespace: monitoring
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: kube-prometheus-stack/
+    path: community-prometheus/helm/kube-prometheus-stack
     repoURL: https://github.com/loydpadgett/kube-prom-stack
     targetRevision: main
   syncPolicy:
@@ -16,4 +16,4 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-      - "Replace"
+      - "Replace=true"
