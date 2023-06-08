@@ -39,7 +39,7 @@ serviceAccount:
 #    eks.amazonaws.com/role-arn: arn:aws:iam::123456789000:role/iam-role-name-here
   autoMount: true
 
-replicas: 1
+replicas: 2
 
 ## Create a headless service for the deployment
 headlessService: false
@@ -183,7 +183,7 @@ gossipPortName: gossip
 ##
 service:
   enabled: true
-  type: ClusterIP
+  type: LoadBalancer
   port: 80
   targetPort: 3000
     # targetPort: 4181 To be used with a proxy extraContainer
@@ -225,10 +225,10 @@ ingress:
   enabled: false
   # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
   # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
-  # ingressClassName: nginx
+  #ingressClassName: traefik
   # Values can be templated
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
+  # annotations: 
+  #  kubernetes.io/ingress.class: "traefik"
     # kubernetes.io/tls-acme: "true"
   labels: {}
   path: /
@@ -236,8 +236,8 @@ ingress:
   # pathType is only for k8s >= 1.1=
   pathType: Prefix
 
-  hosts:
-    - chart-example.local
+  hosts: []
+  #  - chart-example.local
   ## Extra paths to prepend to every host configuration. This is useful when working with annotation based services.
   extraPaths: []
   # - path: /*
@@ -280,8 +280,15 @@ tolerations: []
 ## Affinity for pod assignment (evaluated as template)
 ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 ##
-affinity: {}
-
+affinity: 
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: nodetype
+          operator: In
+          values:
+          - "worker"
 ## Topology Spread Constraints
 ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
 ##
