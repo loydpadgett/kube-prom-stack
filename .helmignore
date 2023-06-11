@@ -16,6 +16,7 @@
 *.tmp
 *~
 # Various IDEs
+.code-workspace
 .project
 .idea/
 *.tmproj
