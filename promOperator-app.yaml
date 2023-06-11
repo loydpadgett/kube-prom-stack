@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prometheus-grafana
+  name: prom-v1
 spec: 
   destination:
-    namespace: monitoring
+    namespace: dev-monitoring
     server: https://kubernetes.default.svc
-  project: default
+  project: prom-v1
   source:
-    path: community-prometheus/helm/kube-prometheus-stack
+    path: helm/charts/
     repoURL: https://github.com/loydpadgett/kube-prom-stack
     targetRevision: main
   syncPolicy:
@@ -16,4 +16,4 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-      - "Replace=true"
+    - CreateNamespace=true
