@@ -183,7 +183,7 @@ gossipPortName: gossip
 ##
 service:
   enabled: true
-  type: ClusterIP
+  type: LoadBalancer
   port: 80
   targetPort: 3000
     # targetPort: 4181 To be used with a proxy extraContainer
@@ -198,10 +198,11 @@ serviceMonitor:
   ## If true, a ServiceMonitor CRD is created for a prometheus operator
   ## https://github.com/coreos/prometheus-operator
   ##
-  enabled: false
+  enabled: true
   path: /metrics
-  #  namespace: monitoring  (defaults to use the namespace this chart is deployed to)
-  labels: {}
+  namespace: monitoring
+  labels:
+    release: lrom
   interval: 1m
   scheme: http
   tlsConfig: {}
@@ -788,7 +789,7 @@ smtp:
 sidecar:
   image:
     repository: quay.io/kiwigrid/k8s-sidecar
-    tag: 1.22.0
+    tag: 1.24.3
     sha: ""
   imagePullPolicy: IfNotPresent
   resources: {}

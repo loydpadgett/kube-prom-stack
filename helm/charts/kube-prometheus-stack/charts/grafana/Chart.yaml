@@ -26,4 +26,4 @@ sources:
 - https://github.com/grafana/grafana
 - https://github.com/grafana/helm-charts
 type: application
-version: 6.56.5
+version: 6.56.6
